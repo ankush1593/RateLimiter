@@ -1,5 +1,6 @@
 package aspect;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,12 +75,14 @@ public class RateLimitAspect {
 
 		  private ArrayList<LocalDateTime> getTimeUpdatedList(ArrayList<LocalDateTime> accessTimeList, RateLimit rateLimit) {
 			int lastUsableTimeIndex = 0;
+			Duration duration;
 			for(int i=0; i< accessTimeList.size(); i++) {
-				if((accessTimeList.get(i).getSecond() - LocalDateTime.now().getSecond()) > rateLimit.duration()) {
+				duration = Duration.between(accessTimeList.get(i),LocalDateTime.now());
+				if(duration.getSeconds() > rateLimit.duration()) {
 					lastUsableTimeIndex = i;
 				}
 			}
-			accessTimeList.subList(0, lastUsableTimeIndex).clear();
+			accessTimeList.subList(0, (lastUsableTimeIndex)).clear();
 			return accessTimeList;
 		}
 

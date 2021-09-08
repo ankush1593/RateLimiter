@@ -13,7 +13,7 @@ import annotations.RateLimit;
 @RestController
 public class WelcomeController {
 	
-	@RateLimit(limit = 3, duration = 60, unit = TimeUnit.SECONDS)
+	@RateLimit(limit = 5, duration = 10, unit = TimeUnit.SECONDS)
 	@RequestMapping("/welcome")
 	  public String welcome(HttpServletRequest request, @RequestParam("clientId") String clientId) {
 	    return "Test RateLimit API";
